@@ -1,0 +1,64 @@
+<!--//forms and previews-->
+<div class="col-md-12 pt-md-2 pl-md-5 pr-md-5 pb-md-5 float-left">
+  <div id="heading" class="row text-center pb-md-2 info_size">
+    <span class="col-md-12 text-info text-center">Upload files to S3</span>
+  </div>
+  <div id="flash" class="alert-info col-md-12 text-center">
+    <% flash.each do |type, msg| %>
+      <div>
+        <%= msg %>
+      </div>
+    <% end %>
+  </div>
+  <div id="image_preview"></div>
+<!--  //forms -->
+  <div class="col-md-4 d-inline float-left p-md-5">
+    <%= form_tag({action: :create}, multipart: true) do %>
+      <label for="images">Upload images/pdfs/videos only</label>
+      <%= file_field_tag 'file', name: "files[]", multiple: true, id: 'upload_files', accept:"image/*,video/*,application/pdf", class: "p-md-0" %>
+      <%= submit_tag 'UPLOAD', class: "btn-primary mt-md-3" %>
+    <% end %>
+  </div>
+  <div  class="col-md-4 d-inline float-left p-md-5">
+    <%= form_tag({action: :create}, multipart: true) do %>
+      <label for="images">Upload mp4 only</label>
+      <%= file_field_tag 'file', name: "files[]", id: 'upload_file', accept: "video/mp4,video/x-m4v", class: "p-md-0" %>
+      <%= submit_tag 'UPLOAD', class: "btn-primary mt-md-3" %>
+    <% end %>
+  </div>
+  <div  class="col-md-4 d-inline float-left p-md-5">
+    <%= form_tag({action: :create}, multipart: true) do %>
+      <label for="images">Upload single image only</label>
+      <%= file_field_tag 'file', name: "files[]", id: 'upload_single', accept: "image/*", class: "p-md-0" %>
+      <%= submit_tag 'UPLOAD', class: "btn-primary mt-md-3" %>
+    <% end %>
+  </div>
+</div>
+
+<!--//thumbnails loop-->
+<div class="col-md-12 p-md-5 float-left text-center" id="thumbnail">
+  <span class="col-md-12 text-info text-center d-block">Thumbnails (click on image to delete)</span>
+  <% @files.each do |file| %>
+    <% if !file['url'].blank? %>
+      <% if file['url'].include?('img') || file['url'].include?('png') || file['url'].include?('jpg') %>
+        <img src="<%= file['url'] %>" alt="<%= file['file_name'] %>" class="img-thumbnail info_size col-md-2 m-3 hvr resize abc" id="<%= file['_id'].values[0] %>"
+             data-toggle="tooltip" data-placement="top" title="Delete This file.">
+      <% elsif file['url'].include?('pdf') %>
+        <img src="/download.jpg" alt="<%= file['file_name'] %>" class="img-thumbnail info_size col-md-2 m-3 hvr resize abc" id="<%= file['_id'].values[0] %>"
+             data-toggle="tooltip" data-placement="top" title="Delete This file.">
+      <% elsif file['url'].include?('.mp4') %>
+        <video class='img-thumbnail info_size col-md-2 m-3  hvr abc' id="<%= file['_id'].values[0] %>" data-toggle="tooltip" data-placement="top" title="Delete This file.">
+          <source src="<%= file['url'] %>">
+        </video>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+
+<!--//loader on delete action-->
+<div id="divLoading" class="loader_div" style="display: none;">
+  <p style="position: absolute; color: White; top: 50%; left: 45%;">
+    Loading, please wait...
+    <img src="/loader.gif" style="width: 10%;">
+  </p>
+</div>
