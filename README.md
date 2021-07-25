@@ -8,7 +8,7 @@ This project is for uploading/deleting files (i.e images/pdf/videos) to AWS s3 b
 - jquery
 - Bootstrap
 
-Project revisions are managed in *upload_files* repository on public server with [GIT](  ).
+Project revisions are managed in *upload_files* repository on public server with [GIT]( https://github.com/cbhushan20/Upload-Files.git ).
 
 ### Installation
 File Upload requires:
@@ -16,9 +16,9 @@ File Upload requires:
 - Rails v-6.0.2
 
 Clone the git repository and install packages.
-$ git clone 
-$ cd upload_files
-$ bundle install
+- $ git clone https://github.com/cbhushan20/Upload-Files.git
+- $ cd upload_files
+- $ bundle install
 
 ### Setup database.
  - rails g mongoid:config (to create mongoid.yml)
